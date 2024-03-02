@@ -1,0 +1,56 @@
+{
+    "name": "钓鱼人生",
+    "version": "0.1.240302",
+    "scriptFileList": [
+        "game/fishing/anglingCheck.js",
+        "game/fishing/appearFishFilter.js",
+        "game/fishing/contains.js",
+        "game/fishing/donateFish.js",
+        "game/fishing/initFishModel.js",
+        "game/fishing/notContains.js",
+        "game/fishing/sellAllFish.js",
+        "game/fishing/timeFormat.js"
+    ],
+    "tweeFileList": [
+        "game/fishing/badEvents.twee",
+        "game/fishing/main.twee"
+    ],
+    "imgFileList": [],
+    "additionFile": [
+        "README.md"
+    ],
+    "scriptFileList_preload": [],
+    "addonPlugin": [
+        {
+            "modName": "TweeReplacer",
+            "addonName": "TweeReplacerAddon",
+            "modVersion": "1.0.0",
+            "params": [
+                {
+                    "passage": "Lake Fishing Rock",
+                    "findString": "<<if $nextPassageCheck is \"Lake Waterfall\">>",
+                    "replace": "<<run initFishModel()>><<icon \"fishing.png\">><<link [[钓鱼 (0:10)|Go Fishing Lake]]>><<pass 10>><</link>><br><<askicon>><<link [[询问巨鹰|Ask Fuda About Fish]]>><</link>><br><<if $nextPassageCheck is \"Lake Waterfall\">>",
+                    "debug": true
+                },
+                {
+                    "passage": "Coast Path Farmland",
+                    "findString": "<<farmicon \"meadow\">><<link [[进入草地 (0:30)|Meadow]]>><<pass 30>><</link>>",
+                    "replace": "<<run initFishModel()>><<icon \"fishing.png\">><<link [[钓鱼 (0:10)|Go Fishing Coast Path]]>><<pass 10>><</link>><br>\n\t<<farmicon \"meadow\">><<link [[进入草地 (0:30)|Meadow]]>><<pass 30>><</link>>",
+                    "debug": true
+                },
+                {
+                    "passage": "Flats",
+                    "findString": "<<barbicon>><<link [[离开|Barb Street]]>><</link>>",
+                    "replace": "<<run initFishModel()>><<icon \"fishing.png\">><<link [[钓鱼 (0:10)|Go Fishing Canal]]>><<pass 10>><</link>>\n\t<br>\n\t<<barbicon>><<link [[离开|Barb Street]]>><</link>>",
+                    "debug": true
+                }
+            ]
+        }
+    ],
+    "dependenceInfo": [
+        {
+            "modName": "TweeReplacer",
+            "version": ">=1.0.0"
+        }
+    ]
+}

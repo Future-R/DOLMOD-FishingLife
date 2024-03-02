@@ -1,0 +1,214 @@
+:: Go Fishing Lake
+
+<<set $outside to 1>><<set $location to "lake">><<effects>><<lakeeffects>>
+<<set _lakeFishes to appearFishFilter("湖泊")>>
+这片水域似乎有 <<= _lakeFishes.length>> 种鱼。
+<br>
+你的鱼篓里有 $Fishing.currentFish.length 条鱼。
+<br><br>
+你奋力提竿。
+<<set _BoolAC to anglingCheck(_lakeFishes, 20)>>
+<br>
+<<if _BoolAC>>
+	<<if $Fishing.newFish>>
+		嗯？这是……
+		<font color="#FF0000"><<=$Fishing.FishModel[$Fishing.currentFish.slice(-1)].name>></font>！
+		<br>
+	<</if>>
+	<font color="#FFFF00">$Fishing.catchDesc</font>
+	<<stress -5>><<lstress>>
+<<else>>
+	/* TODO */
+	<<print either(
+	"结果什么也没钓到。",
+	"嗯？这是……不…什么也没有……",
+	"除了寂寞一无所有。",
+	"决定放这些鱼儿一条生路。",
+	"钓到了易拉罐！为净化水域做了点微小的贡献呢！"
+	)>>
+	<<anglingCheckFail>>
+<</if>>
+<br><br>
+<<icon "fishing.png">><<link [[继续继续 (0:10)|Go Fishing Lake]]>><<pass 10>><</link>><br>
+<<getouticon>><<link [[到此为止|Lake Fishing Rock]]>><</link>><br>
+
+:: Go Fishing Coast Path
+
+<<location "coastpath">><<effects>>
+<<set _lakeFishes to appearFishFilter("海洋")>>
+这片水域似乎有 <<= _lakeFishes.length>> 种鱼。
+<br>
+你的鱼篓里有 $Fishing.currentFish.length 条鱼。
+<br><br>
+你奋力提竿。
+<<set _BoolAC to anglingCheck(_lakeFishes)>>
+<br>
+<<if _BoolAC>>
+	<<if $Fishing.newFish>>
+		嗯？这是……
+		<font color="#FF0000"><<=$Fishing.FishModel[$Fishing.currentFish.slice(-1)].name>></font>！
+		<br>
+	<</if>>
+	<font color="#FFFF00">$Fishing.catchDesc</font>
+	<<stress -5>><<lstress>>
+<<else>>
+	/* TODO */
+	<<print either(
+	"结果什么也没钓到。",
+	"嗯？这是……不…什么也没有……",
+	"除了寂寞一无所有。",
+	"决定放这些鱼儿一条生路。",
+	"钓到了易拉罐！为净化水域做了点微小的贡献呢！"
+	)>>
+	<<anglingCheckFail>>
+<</if>>
+<br><br>
+<<icon "fishing.png">><<link [[继续继续 (0:10)|Go Fishing Coast Path]]>><<pass 30>><</link>><br>
+<<getouticon>><<link [[到此为止|Coast Path Farmland]]>><</link>><br>
+
+:: Go Fishing Canal
+
+<<set _lakeFishes to appearFishFilter("河流")>>
+这片水域似乎有 <<= _lakeFishes.length>> 种鱼。
+<br>
+你的鱼篓里有 $Fishing.currentFish.length 条鱼。
+<br><br>
+你奋力提竿。
+<<set _BoolAC to anglingCheck(_lakeFishes, -20)>>
+<br>
+<<if _BoolAC>>
+	<<if $Fishing.newFish>>
+		嗯？这是……
+		<font color="#FF0000"><<=$Fishing.FishModel[$Fishing.currentFish.slice(-1)].name>></font>！
+		<br>
+	<</if>>
+	<font color="#FFFF00">$Fishing.catchDesc</font>
+	<<stress -5>><<lstress>>
+<<else>>
+	/* TODO */
+	<<print either(
+	"结果什么也没钓到。",
+	"嗯？这是……不…什么也没有……",
+	"除了寂寞一无所有。",
+	"决定放这些鱼儿一条生路。",
+	"钓到了易拉罐！为净化水域做了点微小的贡献呢！"
+	)>>
+	<<anglingCheckFail>>
+<</if>>
+<br><br>
+<<icon "fishing.png">><<link [[继续继续 (0:10)|Go Fishing Canal]]>><<pass 10>><</link>><br>
+<<getouticon>><<link [[到此为止|Flats]]>><</link>><br>
+
+:: Ask Fuda About Fish
+
+<<set $outside to 1>><<set $location to "lake">><<effects>><<lakeeffects>>
+
+<br><br>
+巨鹰：“啊，有什么可以效劳的吗？要是有什么可以帮上忙的，请一定要告诉我。”
+<br><br>
+<<if notContains($Fishing.fishCollections, $Fishing.currentFish) is not -1>>
+	<<highicon>><<link [[捐赠|Ask Fuda About Fish 2]]>><</link>><br>
+<<elseif $Fishing.currentFish.length > 0>>
+	<<highicon>><<link [[出售|Sell Fish to Fuda]]>><</link>><br>
+<</if>>
+<<icon "library.png">><<link [[图鉴|Fish Collections]]>><</link>><br>
+<<getouticon>><<link [[离开|Lake Fishing Rock]]>><</link>><br>
+
+
+:: Ask Fuda About Fish 2
+<br><br>
+<<set _index to -1>>
+<<set _index to notContains($Fishing.fishCollections, $Fishing.currentFish)>>
+巨鹰：<br>
+	呼呼！
+	<<print either(
+	"这是，这是……<<=$Fishing.FishModel[$Fishing.currentFish[_index]].name>>！",
+	"这一定是<<=$Fishing.FishModel[$Fishing.currentFish[_index]].name>>！",
+	"什么！这不是<<=$Fishing.FishModel[$Fishing.currentFish[_index]].name>>吗！"
+	)>>
+	<br>
+	可以的话……关于<font color="#0becf5"><<=$Fishing.FishModel[$Fishing.currentFish[_index]].name>></font>，我来给你稍微解说一下吧？
+	<br><br>
+	<<=$Fishing.FishModel[$Fishing.currentFish[_index]].detail>>
+	<br><br>
+	<<set _price to 0>>
+	<<set _price to donateFish(_index)>>
+	你向巨鹰捐赠了<font color="#0becf5"><<=$Fishing.FishModel[$Fishing.fishCollections.slice(-1)].name>></font>。
+	<br>
+	图鉴收集度：<<=$Fishing.fishCollections.length>> / <<=$Fishing.FishModel.length>>
+	<br>
+	获得报酬<<printmoney _price>>！
+	<br>
+	<<set $money += _price>>
+	<br><br>
+<<if notContains($Fishing.fishCollections, $Fishing.currentFish) is not -1>>
+	<<highicon>><<link [[继续捐赠|Ask Fuda About Fish 2]]>><</link>><br>
+<<elseif $Fishing.currentFish.length > 0>>
+	<<highicon>><<link [[出售|Sell Fish to Fuda]]>><</link>><br>
+<</if>>
+<<icon "library.png">><<link [[图鉴|Fish Collections]]>><</link>><br>
+<<getouticon>><<link [[离开|Lake Fishing Rock]]>><</link>><br>
+
+:: Sell Fish to Fuda
+
+巨鹰：<br>
+<<set _num to 0>>
+<<set _num to $Fishing.currentFish.length>>
+<<set _price to 0>>
+<<set _price to sellAllFish()>>
+感谢！一共<<=_num>>条鱼，给你<<printmoney _price>>！
+<<set $money += _price>>
+<br><br>
+<<ind>><<link [[好的|Ask Fuda About Fish]]>><</link>><br>
+
+:: Fish Collections
+
+<br>
+收集度：<<=$Fishing.fishCollections.length>> / <<=$Fishing.FishModel.length>>
+<br>
+<<if $Fishing.fishCollections.length is 0>>
+	图鉴空空如也，好像等待着写入。<br>
+	纯白也象征着一切的开端，和无穷的可能性。
+<<elseif $Fishing.fishCollections.length lt $Fishing.FishModel.length / 3>>
+	图鉴只有寥寥几个记录，但能开始总归是好的。
+<<elseif $Fishing.fishCollections.length lt $Fishing.FishModel.length / 2.5>>
+	图鉴已经有一些记录，但还是太少，再加把劲吧！
+<<elseif $Fishing.fishCollections.length lt $Fishing.FishModel.length / 2>>
+	图鉴逐渐充实起来了，看来辛苦是值得的。
+<<elseif $Fishing.fishCollections.length lt $Fishing.FishModel.length / 1.5>>
+	图鉴收集已经过半。
+	图鉴里没有记载的声音和气味，也清晰地浮现在你的记忆中。
+<<elseif $Fishing.fishCollections.length lt $Fishing.FishModel.length / 1.25>>
+	图鉴就快完成了。
+	翻着满满当当的记录，这使你充满了决心。
+<<elseif $Fishing.fishCollections.length lt $Fishing.FishModel.length>>
+	图鉴差一点就完成了！
+	最后那一点进度可真挠人啊！
+<<elseif $Fishing.fishCollections.length is $Fishing.FishModel.length>>
+	你居然完成了图鉴！真是捕鱼达人！
+	即使不用图鉴，你也对其中的信息倒背如流了吧！
+<</if>>
+<br><br>
+<<ind>><<link [[合上图鉴|Ask Fuda About Fish]]>><</link>>
+<br><br>
+<<if $Fishing.fishCollections.length is not 0>>
+<ul>
+	<<for _i, _fish range $Fishing.FishModel>>
+		<li>
+		<<if $Fishing.fishCollections.includes($Fishing.FishModel[_i].index)>>
+			<font color="#FFFF00"><<=$Fishing.FishModel[_i].name>></font><br>
+			栖息地：<<=$Fishing.FishModel[_i].location>><br>
+			尺寸：<<=$Fishing.FishModel[_i].size>><br>
+			出没月份：<<=timeFormat($Fishing.FishModel[_i].month, 0)>><br>
+			出没时段：<<=timeFormat($Fishing.FishModel[_i].hour, 1)>><br>
+			市场价：£<<=$Fishing.FishModel[_i].prices>><br>
+			笔记：<<=$Fishing.FishModel[_i].detail>><br>
+		<<else>>
+			???<br>
+		<</if>>
+		</li>
+		<br>
+	<</for>>
+</ul>
+<<ind>><<link [[合上图鉴|Ask Fuda About Fish]]>><</link>><br>
+<</if>>
