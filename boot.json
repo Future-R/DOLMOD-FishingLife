@@ -29,7 +29,7 @@
                 {
                     "passage": "Lake Fishing Rock",
                     "findString": "<<if $nextPassageCheck is \"Lake Waterfall\">>",
-                    "replace": "<<run initFishModel()>><<icon \"fishing.png\">><<link [[钓鱼 (0:10)|Go Fishing Lake]]>><<pass 10>><</link>><br><<askicon>><<link [[询问巨鹰|Ask Fuda About Fish]]>><</link>><br><<if $nextPassageCheck is \"Lake Waterfall\">>",
+                    "replace": "<<run initFishModel()>><<icon \"fishing.png\">><<link [[钓鱼 (0:10)|Go Fishing Lake]]>><<pass 10>><</link>><br><<link [[询问巨鹰|Ask Fuda About Fish]]>><</link>><br><<if $nextPassageCheck is \"Lake Waterfall\">>",
                     "debug": true
                 },
                 {
